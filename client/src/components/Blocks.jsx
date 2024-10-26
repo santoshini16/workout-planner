@@ -1,22 +1,15 @@
 import React from "react";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 
-const workoutBlocks = [
-  { id: "warmup", label: "Warm-up", totalKm: 3 },
-  { id: "active", label: "Active", totalKm: 3 },
-  { id: "cooldown", label: "Cool-down", totalKm: 3 },
-  { id: "repeatSteps", label: "Repeat Steps", totalKm: 4 },
-  { id: "rampup", label: "Ramp-up", totalKm: 5 },
-  { id: "rampdown", label: "Ramp-down", totalKm: 4 },
-];
 
-const Block = ({workoutBlocks}) => (
+
+const Block = ({workoutBlocks,onSelectBlock}) => (
   <Droppable droppableId="block">
     {(provided) => (
       <div
         {...provided.droppableProps}
         ref={provided.innerRef}
-        className="w-[312px] min-h-[201px] bg-white shadow-md rounded-[12px] flex flex-col justify-center items-center"
+        className="w-[312px] p-4 h-[250px] bg-white shadow-md rounded-[12px] flex flex-col  items-center"
       >
         <p className="font-bold text-[16px] leading-[22px] pl-4 text-[#242424] font-dm-sans">
           Click or drag the blocks to build workout
@@ -32,6 +25,7 @@ const Block = ({workoutBlocks}) => (
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
                   className="bg-[#d1c7fc] w-[90px] h-[60px] rounded-lg shadow-md flex flex-col justify-center items-center cursor-pointer"
+                  onClick={() => onSelectBlock(block)}
                 >
                   <div className="w-full h-2/3 bg-[#867ce9] rounded-t-lg flex justify-center items-center">
                     <p className="font-bold text-xs text-white">{block.label}</p>

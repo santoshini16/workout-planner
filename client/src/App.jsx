@@ -30,6 +30,9 @@ const App = () => {
       setSelectedBlock(draggedBlock);
     }
   };
+  const handleSelectBlock = (block) => {
+    setSelectedBlock(block);
+  };
 
   return (
      
@@ -37,7 +40,7 @@ const App = () => {
         <Header />
         <DragDropContext onDragEnd={handleOnDragEnd}>
         <div className="flex space-x-8 m-4">
-          <Block workoutBlocks={workoutBlocks} />
+          <Block workoutBlocks={workoutBlocks} onSelectBlock={handleSelectBlock}/>
           <Chart selectedBlock={selectedBlock} />
         </div>
         </DragDropContext>
