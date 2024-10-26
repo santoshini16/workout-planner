@@ -11,10 +11,9 @@ import {
   Legend,
 } from "chart.js";
 
-// Register Chart.js components
+
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-// Data for each workout substep with km and percentage
 const subStepsData = {
   warmup: [{ name: "Total", km: 3, percentage: 50 }],
   active: [{ name: "Total", km: 3, percentage: 75 }],
