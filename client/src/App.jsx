@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Header from "./components/Header";
 import Block from "./components/Blocks";
 import Chart from "./components/Chart";
-import BlockCard from "./components/BlockCard"; // Import the new BlockCard component
+import BlockCard from "./components/BlockCard";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 const workoutBlocks = [
