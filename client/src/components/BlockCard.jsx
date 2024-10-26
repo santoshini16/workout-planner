@@ -15,6 +15,7 @@ const BlockCard = ({ block }) => {
     >
       <div className="flex flex-col items-center justify-between w-full mb-2">
         <h2 className="text-lg font-bold text-gray-700">{block.label}</h2>
+        <div className="w-full h-[1px] bg-[#E5E5E5] opacity-100 my-2"></div>
         <div className="w-full  h-auto p-[0.1rem] pt-0 flex justify-between items-center gap-2 rounded-[12px] bg-gradient-to-r from-[#464feb1a] to-[#8330e91a]">
             <div className="flex items-center justify-center">
             <div className="w-12 h-12 p-3 bg-[#F2F2F2] rounded-[8px] ">
@@ -29,7 +30,8 @@ const BlockCard = ({ block }) => {
 
        
       </div>
-      <div className="flex items-center justify-center w-full m-2">
+      <div className="flex items-center justify-center w-full m-1">
+      <div className="w-[480px] h-[1.5px] bg-[#E5E5E5] opacity-100 my-2"></div>
         <button
           className="py-1 px-4 text-purple-500 border border-purple-500 rounded-full hover:bg-purple-100"
           style={{
@@ -39,6 +41,7 @@ const BlockCard = ({ block }) => {
         >
           Add Substep
         </button>
+        <div className="w-[470px] h-[1.5px] bg-[#E5E5E5] opacity-100 my-2"></div>
       </div>
     </div>
   );

@@ -26,6 +26,7 @@ const Header = () => {
         <h1 className="text-xl font-medium text-gray-800">
           Run Workout
         </h1>
+        <img src="/Icons.png" alt="icons" style={{marginTop:"0px"}}/>
       </div>
 
       {/* Right Section with Save Button */}
