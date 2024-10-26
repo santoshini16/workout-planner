@@ -1,26 +1,65 @@
+// Import necessary libraries and components
 import React from "react";
-import { Resizable } from "re-resizable";
 import { Bar } from "react-chartjs-2";
-import { subStepsData } from "../data/subStepsData";
-import { Draggable } from "react-beautiful-dnd";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
-const Chart = ({ block, index }) => {
-  const subSteps = subStepsData[block.id] || [];
 
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
+const subStepsData = {
+  warmup: [{ name: "Total", km: 3, percentage: 50 }],
+  active: [{ name: "Total", km: 3, percentage: 75 }],
+  cooldown: [{ name: "Total", km: 3, percentage: 35 }],
+  repeatSteps: [
+    { name: "Step 1", km: 2, percentage: 75 },
+    { name: "Step 2", km: 2, percentage: 60 },
+  ],
+  rampup: [
+    { name: "Part 1", km: 2, percentage: 61 },
+    { name: "Part 2", km: 1, percentage: 73 },
+    { name: "Part 3", km: 1, percentage: 82 },
+    { name: "Part 4", km: 1, percentage: 95 },
+  ],
+  rampdown: [
+    { name: "Part 1", km: 1, percentage: 95 },
+    { name: "Part 2", km: 1, percentage: 82 },
+    { name: "Part 3", km: 1, percentage: 73 },
+    { name: "Part 4", km: 1, percentage: 61 },
+  ],
+};
+
+// Chart component using Chart.js's Bar component
+const Chart = ({ selectedBlock }) => {
+  const subSteps = subStepsData[selectedBlock?.id] || [];
+
+  // Calculate total km
   const totalKm = subSteps.reduce((sum, step) => sum + step.km, 0);
+
+  // Prepare data for Chart.js
   const chartData = {
-    labels: Array(subSteps.length).fill(""),
+    labels: Array(subSteps.length).fill(""), // Empty labels for each bar
     datasets: [
       {
-        label: `${block.label} - Percentage`,
-        data: subSteps.map((step) => step.percentage),
-        backgroundColor: "rgba(134, 124, 233, 0.7)",
+        label: `${selectedBlock?.label} - Percentage`,
+        data: subSteps.map((step) => step.percentage), // Map each substep's percentage to y-axis
+        backgroundColor: "rgba(134, 124, 233, 0.7)", // Bar color
         borderColor: "rgba(134, 124, 233, 1)",
         borderWidth: 1,
+        barPercentage: 0.994, 
+        categoryPercentage: 1.0,
       },
     ],
   };
 
+  // Chart options for display
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -28,7 +67,7 @@ const Chart = ({ block, index }) => {
       legend: { display: true, position: "top" },
       title: {
         display: true,
-        text: `${block.label} Chart`,
+        text: `${selectedBlock?.label} Chart`,
       },
     },
     scales: {
@@ -45,32 +84,30 @@ const Chart = ({ block, index }) => {
           display: true,
           text: `Total Distance: ${totalKm} km`,
         },
+        ticks: {
+          callback: (value, index) => (index === subSteps.length - 1 ? `${totalKm} km` : ""),
+          font: {
+            size: 12,
+          },
+        },
       },
     },
   };
 
   return (
-    <Draggable draggableId={block.id} index={index}>
-      {(provided) => (
-        <Resizable
-          className="w-full bg-gray-100 rounded-lg shadow-lg p-4"
-          defaultSize={{ width: "100%", height: 400 }}
-          minWidth="50%"
-          minHeight={200}
-          maxHeight={600}
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          <Bar data={chartData} options={chartOptions} />
-        </Resizable>
+    <div className="w-full p-5 bg-gray-100 rounded-lg shadow-lg" style={{ height: "400px" }}>
+      {selectedBlock ? (
+        <Bar data={chartData} options={chartOptions} />
+      ) : (
+        <p className="text-center text-gray-500">
+          Select a block to view the details.
+        </p>
       )}
-    </Draggable>
+    </div>
   );
 };
 
 export default Chart;
-
 
 
 
