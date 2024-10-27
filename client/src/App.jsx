@@ -7,13 +7,14 @@ import BlockCard from "./components/BlockCard";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 const workoutBlocks = [
-  { id: "warmup", label: "Warm-up", totalKm: 3 },
-  { id: "active", label: "Active", totalKm: 3 },
-  { id: "cooldown", label: "Cool-down", totalKm: 3 },
-  { id: "repeatSteps", label: "Repeat Steps", totalKm: 4 },
-  { id: "rampup", label: "Ramp-up", totalKm: 5 },
-  { id: "rampdown", label: "Ramp-down", totalKm: 4 },
+  { id: "warmup", label: "Warm-up", totalKm: 3, image: "/Block.png" },
+  { id: "active", label: "Active", totalKm: 3, image: "/Block1.png" },
+  { id: "cooldown", label: "Cool-down", totalKm: 3, image: "/Block2.png" },
+  { id: "repeatSteps", label: "Repeat Steps", totalKm: 4, image: "/Block3.png" },
+  { id: "rampup", label: "Ramp-up", totalKm: 5, image: "/Block4.png" },
+  { id: "rampdown", label: "Ramp-down", totalKm: 4, image: "/Block5.png" },
 ];
+
 
 const App = () => {
   const [selectedBlocks, setSelectedBlocks] = useState([]);
