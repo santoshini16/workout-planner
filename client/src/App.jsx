@@ -21,29 +21,35 @@ const App = () => {
 
   const handleOnDragEnd = (result) => {
     const { destination, source, draggableId } = result;
-
-    if (!destination) return;
-
-    // Get the dragged block based on draggableId
-    const draggedBlock = workoutBlocks.find((block) => block.id === draggableId);
-
-    if (draggedBlock) {
-      setSelectedBlocks((prevBlocks) => {
-        const updatedBlocks = Array.isArray(prevBlocks) ? [...prevBlocks] : [];
+  
+    if (!destination) return; // Exit if no destination
+  
+    setSelectedBlocks((prevBlocks) => {
+      const updatedBlocks = Array.isArray(prevBlocks) ? [...prevBlocks] : [];
+  
+      if (source.droppableId === "block" && destination.droppableId === "chart") {
+        // Dragging from 'block' to 'chart'
+        const draggedBlock = workoutBlocks.find((block) => block.id === draggableId);
+        if (draggedBlock) {
         
-        // Remove the block from its original position if necessary
-        if (source.droppableId === "chart") {
-          updatedBlocks.splice(source.index, 1);
+          const indexToInsert = destination.index === 0 && updatedBlocks.length > 0 
+            ? updatedBlocks.length 
+            : destination.index;
+  
+          console.log("Adding new block at index:", indexToInsert);
+          updatedBlocks.splice(indexToInsert, 0, draggedBlock);
         }
-        
-        // Insert the block at the new position
-        updatedBlocks.splice(destination.index, 0, draggedBlock);
-
-        return updatedBlocks;
-      });
-    }
+      } else if (source.droppableId === "chart" && destination.droppableId === "chart") {
+        // Reordering within 'chart'
+        const [movedBlock] = updatedBlocks.splice(source.index, 1);
+        updatedBlocks.splice(destination.index, 0, movedBlock);
+        console.log("Reordering block to index:", destination.index);
+      }
+  
+      return updatedBlocks;
+    });
   };
-
+  
   const handleSelectBlock = (block) => {
     setSelectedBlocks((prevBlocks) => [...prevBlocks, block]);
   };
